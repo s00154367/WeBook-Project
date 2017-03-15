@@ -1,0 +1,121 @@
+﻿@model WebCreateQR.Models.Event
+@{
+    ViewBag.Title = "EditPoster";
+}
+<h2>EditPoster</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Event</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.EventId)
+        <div class="col-md-12">
+            <div class="btn btn-primary">
+                <input type="file" onchange="displayImg(this)" id="chooseImg" />
+            </div>
+        </div>
+        <hr />
+        <div>
+            <div style="width: 400px; height:500px;" id="showImg" class="col-md-6 thumnail">
+                <h2>Chosen Poster</h2>
+                <img class="img-responsive" id="chosenImg" />
+                <div class="caption">
+                    <p id="desc"></p>
+                    <a href="#" onclick="Clear()"><i class="glyphicon glyphicon-trash"></i></a>
+                </div>
+            </div>
+
+            <div style="width: 400px; height:500px; " id="showQR" class="col-md-6 thumnail">
+                <h2>Event QR Code</h2>
+                <img class="img-responsive" id="QRCodeImg" onload="DisplayQR()" />
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <h4> Where Would You Like To Place the QR Code On The Chosen Poster?</h4>
+            <div class="col-md-2">
+                <input type="button" value="Bottom Left" class="btn btn-primary" />
+            </div>
+            <div class="col-md-2">
+                <input type="button" value="Bottom Right" class="btn btn-primary" />
+            </div>
+            <div>
+                <img class="img-responsive" id="newPoster" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-8">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<script>
+
+    function Clear() {
+        $("#chooseImg").val('');
+        $("#chosenImg").remove();
+
+
+        }
+
+        function DisplayQR() {
+
+            var QR = document.getElementById("QRCodeImg");
+            QR.setAttribute("src", "C:\Users\s00154367\Desktop\asdf.bmp");
+        }
+
+        function displayImg(event) {
+            //alert("hello");
+            var file = event.files[0];
+            var reader = new FileReader();
+
+
+
+            reader.onload = function (e) {
+                //alert("hello2");
+                var img = document.getElementById("chosenImg");
+                img.setAttribute('src', e.target.result);
+                img.height(200);
+                img.width(150);
+
+                //var height = img.height;
+                //var width = img.width;
+                //var type = file.type;
+                //var size = ~~(file.size / 1024) + "KB";
+                var desc = document.getElementById("desc");
+                //desc.text = "Size:" + size + " | " + height + " X " + width + " | " + type + "";
+                desc.text = "hello";
+
+
+                //document.getElementById('chosenImg').src = reader.result;
+
+                //image.src = _file.target.result;
+                //image.onload = function () {
+                //    var height = this.height;
+                //    var width = this.width;
+                //    var type = file.type;
+                //    var size = ~~(file.size / 1024) + "KB";
+
+
+                //$("#chosenImg").attr('src', _file.target.result);
+                //$("#desc").text("Size:" + size + " | " + height + " X " + width + " | " + type + "");
+                //$("#imgPreview").show();
+                // }
+            };
+            reader.readAsDataURL(file);
+
+        }
+
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

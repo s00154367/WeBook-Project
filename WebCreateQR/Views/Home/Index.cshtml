@@ -1,0 +1,74 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@using WebMatrix.Data;
+@{    
+    var db = Database.Open("DefaultConnection");
+    var twoWeekQuery = "SELECT top 2 * FROM Event order by StartDateTime asc";/*WHERE StartDateTime <=  DateTime.Now.AddDays(14)*/
+}
+
+<div class="jumbotron">
+    <h1>Upcoming Events Dont Miss!</h1>
+    <div class="lead"> 
+       @if (db.Query(twoWeekQuery).Count() > 0)
+       {
+           foreach (var _event in db.Query(twoWeekQuery))
+           {
+            <div class="col-md-6 well well-sm ">
+                <table>
+                    <tr>
+                        <td class="col-md-6">
+                            <div>
+                                <h2>@_event.EventName</h2>
+                                <p>@_event.EventLocation</p>
+                                <p>@_event.StartDateTime - @_event.EndDateTime</p>
+                                <p>Tickets Available - <strong>@_event.TicketsAvailable</strong></p>
+                                <p>Tickets Remaining - <strong>@_event.RemainingTickets</strong></p>
+                                <p><a href="~/Events/Details/@_event.EventId" class="btn btn-primary btn-lg">View @_event.EventName &raquo;</a></p>
+                            </div>
+                        </td>
+                        <td class="col-md-4">
+                            <div>
+                                <img id="Poster" src="@_event.Poster" alt="Poster" />
+                                <img id="QrCode" src="" alt="QR Code" />
+                            </div>
+                        </td>
+                        @*<td class="col-md-4">
+                            <div>
+                                
+                            </div>
+                        </td>*@
+                    </tr>
+                </table>
+            </div>
+           }
+       }
+    </div>
+    <p><a href="~/Events/Index" class="btn btn-primary btn-lg pull-right">View All Events &raquo;</a></p>
+</div>
+
+@for (int i = 0; i < 15; i++)
+{
+    <br/>
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>First Log In</h2>
+        <p>
+            Log In To Recieve Email Confirmations And Create Events For Other Users To View.
+        </p>
+        <a class="btn btn-default btn-block" href="@Html.ActionLink("Register Here", "Register", "Account")"></a>
+        <a class="btn btn-default btn-block" href="@Html.ActionLink("Log in Here", "Login", "Account")"></a>
+    </div>
+    <div class="col-md-4">
+        <h2>Create Events</h2>
+        <p>You Can Create Events Easily And Get a QR Code Generated To Place On An Event Poster For Other Users To Scan and Make a Booking.</p>
+        <p><a class="btn btn-default" href="~/Events/Create">Create Now &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Get the App!</h2>
+        <p>The WeBookPro App Allows You To Scan The Qr Code of an Event and Lets You Easily Book a Place in The Event</p>
+        <p><a class="btn btn-default" href="">Get The App &raquo;</a></p>
+    </div>
+</div>
