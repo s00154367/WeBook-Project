@@ -57,8 +57,10 @@ namespace WebCreateQR.Controllers
                
                 db.Events.Add(@event);
                 db.SaveChanges();
+                Bitmap storedQr;
                 string qrData = "event" + "," + @event.EventId + "," + @event.EventName + "," + @event.EventLocation + "," + @event.StartDateTime + "," + @event.EndDateTime;
-                QrCreate(qrData, @event.EventName);
+                storedQr = QrCreate(qrData);
+                storedQr.Save(@"C:\Users\kevin\Desktop\" + @event.EventName + ".bmp");
                 return RedirectToAction("Index");
             }
 
@@ -92,8 +94,10 @@ namespace WebCreateQR.Controllers
                 {
                     db.Entry(@event).State = EntityState.Modified;
                     db.SaveChanges();
+                    Bitmap storedQr;
                     string qrData = "event" + "," + @event.EventId + "," + @event.EventName + "," + @event.EventLocation + "," + @event.StartDateTime + "," + @event.EndDateTime;
-                    QrCreate(qrData, @event.EventName);
+                    storedQr = QrCreate(qrData);
+                    storedQr.Save(@"C:\Users\kevin\Desktop\" + @event.EventName + ".bmp");
                     return RedirectToAction("Index");
                 }
             }
@@ -165,9 +169,9 @@ namespace WebCreateQR.Controllers
             base.Dispose(disposing);
         }
         //creating and saving QrCode
-        public void QrCreate(string qr, string saveTitle)
+        public Bitmap QrCreate(string qr)
         {
-
+            Bitmap storedQr;
             var writer = new ZXing.BarcodeWriter
             {
                 Format = BarcodeFormat.QR_CODE,
@@ -177,8 +181,8 @@ namespace WebCreateQR.Controllers
                     Width = 400
                 }
             };
-            writer.Write(qr)
-            .Save(@"C:\Users\Sean's PC\Desktop\"+ saveTitle+".bmp");
+            storedQr = writer.Write(qr);
+            return storedQr;
         }
     }
 }
