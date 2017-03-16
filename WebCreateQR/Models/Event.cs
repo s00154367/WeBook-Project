@@ -20,6 +20,6 @@ namespace WebCreateQR.Models
         public DateTime EndDateTime { get; set; }
         public int TicketsAvailable { get; set; }
         public int RemainingTickets { get; set; }
-
+        public virtual ICollection<AttendEvent> attendees { get; set; }
     }
 }

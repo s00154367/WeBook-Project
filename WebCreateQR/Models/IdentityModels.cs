@@ -22,6 +22,7 @@ namespace WebCreateQR.Models
     {
         public DbSet<Event> Events { get; set; }
         public DbSet<Contacts> Contacts { get; set; }
+        public DbSet<AttendEvent> AttendEvents { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
