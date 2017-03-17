@@ -58,7 +58,8 @@ namespace WebCreateQR.Controllers
                 db.Events.Add(@event);
                 db.SaveChanges();
                 Bitmap storedQr;
-                string qrData = "event" + "," + @event.EventId + "," + @event.EventName + "," + @event.EventLocation + "," + @event.StartDateTime + "," + @event.EndDateTime;
+                //string qrData = "event" + "," + @event.EventId + "," + @event.EventName + "," + @event.EventLocation + "," + @event.StartDateTime + "," + @event.EndDateTime;
+                string qrData = UrlBuilder(@event.EventName, @event.EventLocation, @event.StartDateTime.ToString());
                 storedQr = QrCreate(qrData);
                 storedQr.Save(@"C:\Users\kevin\Desktop\" + @event.EventName + ".bmp");
                 return RedirectToAction("Index");
@@ -95,7 +96,7 @@ namespace WebCreateQR.Controllers
                     db.Entry(@event).State = EntityState.Modified;
                     db.SaveChanges();
                     Bitmap storedQr;
-                    string qrData = "event" + "," + @event.EventId + "," + @event.EventName + "," + @event.EventLocation + "," + @event.StartDateTime + "," + @event.EndDateTime;
+                    string qrData = UrlBuilder(@event.EventName, @event.EventLocation, @event.StartDateTime.ToString());
                     storedQr = QrCreate(qrData);
                     storedQr.Save(@"C:\Users\kevin\Desktop\" + @event.EventName + ".bmp");
                     return RedirectToAction("Index");
@@ -183,6 +184,18 @@ namespace WebCreateQR.Controllers
             };
             storedQr = writer.Write(qr);
             return storedQr;
+        }
+        public string UrlBuilder(string name, string location, string time)
+        {
+            string qrUrl = "http://webookproject.azurewebsites.net/AttendEvents/Create";
+            var uriBuilder = new UriBuilder(qrUrl);
+            var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+            query["eventName"] = name;
+            query["location"] = location;
+            query["time"] = time;
+            uriBuilder.Query = query.ToString();
+            qrUrl = uriBuilder.ToString();
+            return qrUrl;
         }
     }
 }
