@@ -110,6 +110,10 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="WebMatrix.Data, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\WebMatrix.Data.dll</HintPath>
+    </Reference>
     <Reference Include="zxing, Version=0.14.0.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
       <HintPath>..\packages\ZXing.Net.0.14.0.1\lib\net40\zxing.dll</HintPath>
       <Private>True</Private>
@@ -176,7 +180,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AttendEventsController.cs" />
     <Compile Include="Controllers\ContactsController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -184,25 +187,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201702211242377_InitialCreate.cs" />
-    <Compile Include="Migrations\201702211242377_InitialCreate.Designer.cs">
-      <DependentUpon>201702211242377_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702211446391_migration1.cs" />
-    <Compile Include="Migrations\201702211446391_migration1.Designer.cs">
-      <DependentUpon>201702211446391_migration1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703071720351_ContactDetails.cs" />
-    <Compile Include="Migrations\201703071720351_ContactDetails.Designer.cs">
-      <DependentUpon>201703071720351_ContactDetails.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703162008456_AttendEvent.cs" />
-    <Compile Include="Migrations\201703162008456_AttendEvent.Designer.cs">
-      <DependentUpon>201703162008456_AttendEvent.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\AttendEvent.cs" />
     <Compile Include="Models\Contacts.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -276,11 +262,6 @@
     <Content Include="Views\Contacts\Edit.cshtml" />
     <Content Include="Views\Contacts\Index.cshtml" />
     <Content Include="Views\Events\EditPoster.cshtml" />
-    <Content Include="Views\AttendEvents\Create.cshtml" />
-    <Content Include="Views\AttendEvents\Delete.cshtml" />
-    <Content Include="Views\AttendEvents\Details.cshtml" />
-    <Content Include="Views\AttendEvents\Edit.cshtml" />
-    <Content Include="Views\AttendEvents\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -292,20 +273,6 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201702211242377_InitialCreate.resx">
-      <DependentUpon>201702211242377_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702211446391_migration1.resx">
-      <DependentUpon>201702211446391_migration1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703071720351_ContactDetails.resx">
-      <DependentUpon>201703071720351_ContactDetails.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703162008456_AttendEvent.resx">
-      <DependentUpon>201703162008456_AttendEvent.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
