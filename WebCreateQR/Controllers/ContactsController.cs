@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -53,8 +54,10 @@ namespace WebCreateQR.Controllers
             {
                 db.Contacts.Add(contacts);
                 db.SaveChanges();
-                string qrData = "contact" +"," + @contacts.DisplayName + "," + @contacts.PhoneNumber + "," + @contacts.EmailAdress;
-                QrCreate(qrData, @contacts.DisplayName);
+                Bitmap storedQr;
+                string qrData = "contact" + "," + @contacts.DisplayName + "," + @contacts.PhoneNumber + "," + @contacts.EmailAdress;
+                storedQr = QrCreate(qrData);
+                SaveQr();
                 return RedirectToAction("Index");
             }
 
@@ -87,8 +90,10 @@ namespace WebCreateQR.Controllers
             {
                 db.Entry(contacts).State = EntityState.Modified;
                 db.SaveChanges();
+                Bitmap storedQr;
                 string qrData = "contact" + "," + @contacts.DisplayName + "," + @contacts.PhoneNumber + "," + @contacts.EmailAdress;
-                QrCreate(qrData, @contacts.DisplayName);
+                storedQr = QrCreate(qrData);
+                SaveQr();
                 return RedirectToAction("Index");
             }
             return View(contacts);
@@ -128,9 +133,10 @@ namespace WebCreateQR.Controllers
             }
             base.Dispose(disposing);
         }
-        public void QrCreate(string qr, string saveTitle)
+        //creates the qr
+        public Bitmap QrCreate(string qr)
         {
-
+            Bitmap storedQr;
             var writer = new ZXing.BarcodeWriter
             {
                 Format = BarcodeFormat.QR_CODE,
@@ -140,8 +146,16 @@ namespace WebCreateQR.Controllers
                     Width = 400
                 }
             };
-            writer.Write(qr)
-            .Save(@"C:\Users\Kevin\Desktop\" + saveTitle + ".bmp");
+            storedQr = writer.Write(qr);
+            return storedQr;
+        }
+
+        public FilePathResult SaveQr()
+        {
+            string name = Server.MapPath("storedQr.bmp");
+
+            return File(name, "image/bmp");
+
         }
     }
 }
