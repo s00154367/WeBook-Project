@@ -207,12 +207,12 @@ namespace WebCreateQR.Controllers
             return qrUrl;
         }
 
-        public FilePathResult SaveQr()
+        public FileStreamResult SaveQr()
         {
-            string name = Server.MapPath("/storedQr.bmp");
+            string name = "storedQr.bmp";
+            FileInfo info = new FileInfo(name);
             qrCreated = false;
-            return File(name, "image/bmp");
-
+            return File(info.OpenRead(), "image/bmp");
         }
     }
 }
