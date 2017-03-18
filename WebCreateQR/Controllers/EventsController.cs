@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -61,7 +62,7 @@ namespace WebCreateQR.Controllers
                 //string qrData = "event" + "," + @event.EventId + "," + @event.EventName + "," + @event.EventLocation + "," + @event.StartDateTime + "," + @event.EndDateTime;
                 string qrData = UrlBuilder(@event.EventId.ToString(), @event.EventName, @event.EventLocation, @event.StartDateTime.ToString());
                 storedQr = QrCreate(qrData);
-                storedQr.Save(@"C:\Users\kevin\Desktop\" + @event.EventName + ".bmp");
+                SaveQr();
                 return RedirectToAction("Index");
             }
 
@@ -98,9 +99,7 @@ namespace WebCreateQR.Controllers
                     Bitmap storedQr;
                     string qrData = UrlBuilder(@event.EventId.ToString(), @event.EventName, @event.EventLocation, @event.StartDateTime.ToString());
                     storedQr = QrCreate(qrData);
-
-                    storedQr.Save(@"C:\Users\kevin\Desktop\" + @event.EventName + ".bmp");
-
+                    SaveQr();
                     return RedirectToAction("Index");
                 }
             }
@@ -199,6 +198,14 @@ namespace WebCreateQR.Controllers
             uriBuilder.Query = query.ToString();
             qrUrl = uriBuilder.ToString();
             return qrUrl;
+        }
+
+        public FilePathResult SaveQr()
+        {
+            string name = "storedQr.bmp";
+
+            return File(name, "image/bmp");
+
         }
     }
 }
