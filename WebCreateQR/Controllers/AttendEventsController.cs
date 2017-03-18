@@ -135,17 +135,24 @@ namespace WebCreateQR.Controllers
             string id = Request.QueryString["eventId"];
             string location = Request.QueryString["location"];
             string time = Request.QueryString["time"];
-            ViewBag.eventName = name;
-            ViewBag.time = time;
-            List<string> eventList = new List<string>();
-            eventList.Add(name);
+            if (name == null || id == null || location == null || time == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ViewBag.eventName = name;
+                ViewBag.time = time;
+                List<string> eventList = new List<string>();
+                eventList.Add(name);
 
-            int a = int.Parse(id);
-            List<int> eventListId = new List<int>();
-            eventListId.Add(a);
+                int a = int.Parse(id);
+                List<int> eventListId = new List<int>();
+                eventListId.Add(a);
 
-            ViewBag.EventId = new SelectList(eventList, eventListId);
-            return View();
+                ViewBag.EventId = new SelectList(eventList, eventListId);
+                return View();
+            }
         }
 
         // POST: AttendEvents/Create
