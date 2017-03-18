@@ -18,12 +18,12 @@ namespace WebCreateQR.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        bool qRCreated = false;
+        bool qrCreated = false;
         
         // GET: Events
         public ActionResult Index()
         {
-            ViewBag.QrCreated = qRCreated;
+            ViewBag.QrCreated = qrCreated;
             return View(db.Events.ToList());
         }
 
@@ -40,14 +40,14 @@ namespace WebCreateQR.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.QrCreated = qRCreated;
+            ViewBag.QrCreated = qrCreated;
             return View(@event);
         }
 
         // GET: Events/Create
         public ActionResult Create()
         {
-            ViewBag.QrCreated = qRCreated;
+            ViewBag.QrCreated = qrCreated;
             return View();
         }
 
@@ -69,7 +69,7 @@ namespace WebCreateQR.Controllers
                 string qrData = UrlBuilder(@event.EventId.ToString(), @event.EventName, @event.EventLocation, @event.StartDateTime.ToString());
                 Bitmap storedQr;
                 storedQr = QrCreate(qrData);
-                qRCreated = true;
+                qrCreated = true;
                 return RedirectToAction("Index");
             }
 
@@ -87,7 +87,7 @@ namespace WebCreateQR.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.QrCreated = qRCreated;
+            ViewBag.QrCreated = qrCreated;
             return View(@event);
         }
 
@@ -107,7 +107,7 @@ namespace WebCreateQR.Controllers
                     Bitmap storedQr;
                     string qrData = UrlBuilder(@event.EventId.ToString(), @event.EventName, @event.EventLocation, @event.StartDateTime.ToString());
                     storedQr = QrCreate(qrData);
-                    qRCreated = true;
+                    qrCreated = true;
                     return RedirectToAction("Index");
                 }
             }
@@ -211,7 +211,7 @@ namespace WebCreateQR.Controllers
         public FilePathResult SaveQr()
         {
             string name = Server.MapPath("storedQr.bmp");
-            qRCreated = false;
+            qrCreated = false;
             return File(name, "image/bmp");
 
         }
