@@ -19,7 +19,8 @@ namespace WebCreateQR.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         static bool qrCreated = false;
-        
+        static Bitmap storedQr;
+
         // GET: Events
         public ActionResult Index()
         {
@@ -67,7 +68,6 @@ namespace WebCreateQR.Controllers
                 
                 //string qrData = "event" + "," + @event.EventId + "," + @event.EventName + "," + @event.EventLocation + "," + @event.StartDateTime + "," + @event.EndDateTime;
                 string qrData = UrlBuilder(@event.EventId.ToString(), @event.EventName, @event.EventLocation, @event.StartDateTime.ToString());
-                Bitmap storedQr;
                 storedQr = QrCreate(qrData);
                 qrCreated = true;
                 return RedirectToAction("Index");
@@ -104,7 +104,6 @@ namespace WebCreateQR.Controllers
                 {
                     db.Entry(@event).State = EntityState.Modified;
                     db.SaveChanges();
-                    Bitmap storedQr;
                     string qrData = UrlBuilder(@event.EventId.ToString(), @event.EventName, @event.EventLocation, @event.StartDateTime.ToString());
                     storedQr = QrCreate(qrData);
                     qrCreated = true;
