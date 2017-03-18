@@ -99,7 +99,7 @@ namespace WebCreateQR.Controllers
                     string qrData = UrlBuilder(@event.EventId.ToString(), @event.EventName, @event.EventLocation, @event.StartDateTime.ToString());
                     storedQr = QrCreate(qrData);
 
-                    storedQr.Save(@"~\Desktop\" + @event.EventName + ".bmp");
+                    storedQr.Save(@"C:\Users\kevin\Desktop\" + @event.EventName + ".bmp");
 
                     return RedirectToAction("Index");
                 }
