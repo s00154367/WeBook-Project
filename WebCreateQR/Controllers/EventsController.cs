@@ -40,6 +40,7 @@ namespace WebCreateQR.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.QrCreated = qRCreated;
             return View(@event);
         }
 
@@ -86,6 +87,7 @@ namespace WebCreateQR.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.QrCreated = qRCreated;
             return View(@event);
         }
 

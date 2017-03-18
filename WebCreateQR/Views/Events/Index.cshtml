@@ -63,5 +63,5 @@
 </table>
 @if (ViewBag.QrCreated == true)
 {
-    <input type="submit" value="SaveQr" class="btn btn-default" />
+    @Html.ActionLink("Save Qr", "SaveQr", new { @class = "btn btn-info", @id = "addressSearch" })
 }
