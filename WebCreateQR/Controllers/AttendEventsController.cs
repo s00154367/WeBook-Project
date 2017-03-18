@@ -128,5 +128,44 @@ namespace WebCreateQR.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public ActionResult AttendMobile()
+        {
+            string name = Request.QueryString["eventName"];
+            string id = Request.QueryString["eventId"];
+            string location = Request.QueryString["location"];
+            string time = Request.QueryString["time"];
+            ViewBag.eventName = name;
+            ViewBag.time = time;
+            List<string> eventList = new List<string>();
+            eventList.Add(name);
+
+            int a = int.Parse(id);
+            List<int> eventListId = new List<int>();
+            eventListId.Add(a);
+
+            ViewBag.EventId = new SelectList(eventList, eventListId);
+            return View();
+        }
+
+        // POST: AttendEvents/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AttendMobile([Bind(Include = "memberId,EventId,email,ticketCount")] AttendEvent attendEvent)
+        {
+            if (ModelState.IsValid)
+            {
+                db.AttendEvents.Add(attendEvent);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.EventId = new SelectList(db.Events, "EventId", "EventName", attendEvent.EventId);
+            return View(attendEvent);
+        }
     }
 }
+
+

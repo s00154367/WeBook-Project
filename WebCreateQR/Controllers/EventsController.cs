@@ -59,7 +59,7 @@ namespace WebCreateQR.Controllers
                 db.SaveChanges();
                 Bitmap storedQr;
                 //string qrData = "event" + "," + @event.EventId + "," + @event.EventName + "," + @event.EventLocation + "," + @event.StartDateTime + "," + @event.EndDateTime;
-                string qrData = UrlBuilder(@event.EventName, @event.EventLocation, @event.StartDateTime.ToString());
+                string qrData = UrlBuilder(@event.EventId.ToString(), @event.EventName, @event.EventLocation, @event.StartDateTime.ToString());
                 storedQr = QrCreate(qrData);
                 storedQr.Save(@"C:\Users\kevin\Desktop\" + @event.EventName + ".bmp");
                 return RedirectToAction("Index");
@@ -96,7 +96,7 @@ namespace WebCreateQR.Controllers
                     db.Entry(@event).State = EntityState.Modified;
                     db.SaveChanges();
                     Bitmap storedQr;
-                    string qrData = UrlBuilder(@event.EventName, @event.EventLocation, @event.StartDateTime.ToString());
+                    string qrData = UrlBuilder(@event.EventId.ToString(), @event.EventName, @event.EventLocation, @event.StartDateTime.ToString());
                     storedQr = QrCreate(qrData);
                     storedQr.Save(@"C:\Users\kevin\Desktop\" + @event.EventName + ".bmp");
                     return RedirectToAction("Index");
@@ -185,11 +185,12 @@ namespace WebCreateQR.Controllers
             storedQr = writer.Write(qr);
             return storedQr;
         }
-        public string UrlBuilder(string name, string location, string time)
+        public string UrlBuilder(string eventId, string name, string location, string time)
         {
             string qrUrl = "http://webookproject.azurewebsites.net/AttendEvents/Create";
             var uriBuilder = new UriBuilder(qrUrl);
             var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+            query["eventId"] = eventId;
             query["eventName"] = name;
             query["location"] = location;
             query["time"] = time;

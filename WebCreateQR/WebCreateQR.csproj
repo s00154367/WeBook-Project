@@ -285,6 +285,7 @@
     <Content Include="Views\AttendEvents\Details.cshtml" />
     <Content Include="Views\AttendEvents\Edit.cshtml" />
     <Content Include="Views\AttendEvents\Index.cshtml" />
+    <Content Include="Views\AttendEvents\AttendMobile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
