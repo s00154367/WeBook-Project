@@ -196,7 +196,7 @@ namespace WebCreateQR.Controllers
         }
         public string UrlBuilder(string eventId, string name, string location, string time)
         {
-            string qrUrl = "http://webookproject.azurewebsites.net/AttendEvents/Create";
+            string qrUrl = "http://webookproject.azurewebsites.net/AttendEvents/AttendMobile";
             var uriBuilder = new UriBuilder(qrUrl);
             var query = HttpUtility.ParseQueryString(uriBuilder.Query);
             query["eventId"] = eventId;
@@ -208,16 +208,16 @@ namespace WebCreateQR.Controllers
             return qrUrl;
         }
 
-        public FileStreamResult SaveQr(int? id)
+        public FilePathResult SaveQr(int? id)
         {
             Event @event = db.Events.Find(id);
             string qrData = UrlBuilder(@event.EventId.ToString(), @event.EventName, @event.EventLocation, @event.StartDateTime.ToString());
             Bitmap storedQr;
             storedQr = QrCreate(qrData);
-            string name = "/storedQr.bmp";
-            FileInfo info = new FileInfo(name);
+
+            string name = Server.MapPath("/storedQr.bmp");
             qrCreated = false;
-            return File(info.OpenRead(), "image/bmp");
+            return File(name, "image/bmp");
         }
     }
 }
