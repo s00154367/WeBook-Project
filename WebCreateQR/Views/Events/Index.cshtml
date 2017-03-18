@@ -54,6 +54,7 @@
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.EventId }) |
+            @Html.ActionLink("Save Qr", "SaveQr", new { id = item.EventId }) |
             @Html.ActionLink("EditPoster", "EditPoster", new { id = item.EventId }) |
             @Html.ActionLink("Details", "Details", new { id=item.EventId }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.EventId })
@@ -61,7 +62,3 @@
     </tr>
 }
 </table>
-@if (ViewBag.QrCreated == true)
-{
-    @Html.ActionLink("Save Qr", "SaveQr")
-}

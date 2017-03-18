@@ -19,7 +19,6 @@ namespace WebCreateQR.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         static bool qrCreated = false;
-        static Bitmap storedQr;
 
         // GET: Events
         public ActionResult Index()
@@ -68,6 +67,7 @@ namespace WebCreateQR.Controllers
                 
                 //string qrData = "event" + "," + @event.EventId + "," + @event.EventName + "," + @event.EventLocation + "," + @event.StartDateTime + "," + @event.EndDateTime;
                 string qrData = UrlBuilder(@event.EventId.ToString(), @event.EventName, @event.EventLocation, @event.StartDateTime.ToString());
+                Bitmap storedQr;
                 storedQr = QrCreate(qrData);
                 qrCreated = true;
                 return RedirectToAction("Index");
@@ -105,9 +105,10 @@ namespace WebCreateQR.Controllers
                     db.Entry(@event).State = EntityState.Modified;
                     db.SaveChanges();
                     string qrData = UrlBuilder(@event.EventId.ToString(), @event.EventName, @event.EventLocation, @event.StartDateTime.ToString());
+                    Bitmap storedQr;
                     storedQr = QrCreate(qrData);
                     qrCreated = true;
-                    return RedirectToAction("SaveQr");
+                    return RedirectToAction("Index");
                 }
             }
             return View(@event);
@@ -207,9 +208,13 @@ namespace WebCreateQR.Controllers
             return qrUrl;
         }
 
-        public FileStreamResult SaveQr()
+        public FileStreamResult SaveQr(int? id)
         {
-            string name = "storedQr.bmp";
+            Event @event = db.Events.Find(id);
+            string qrData = UrlBuilder(@event.EventId.ToString(), @event.EventName, @event.EventLocation, @event.StartDateTime.ToString());
+            Bitmap storedQr;
+            storedQr = QrCreate(qrData);
+            string name = "/storedQr.bmp";
             FileInfo info = new FileInfo(name);
             qrCreated = false;
             return File(info.OpenRead(), "image/bmp");
