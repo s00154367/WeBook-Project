@@ -18,7 +18,7 @@ namespace WebCreateQR.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        bool qrCreated = false;
+        static bool qrCreated = false;
         
         // GET: Events
         public ActionResult Index()
