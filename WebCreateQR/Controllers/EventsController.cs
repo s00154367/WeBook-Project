@@ -209,7 +209,7 @@ namespace WebCreateQR.Controllers
         public FilePathResult SaveQr()
         {
             string name = Server.MapPath("storedQr.bmp");
-
+            qRCreated = false;
             return File(name, "image/bmp");
 
         }
