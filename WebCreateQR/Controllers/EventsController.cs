@@ -107,7 +107,7 @@ namespace WebCreateQR.Controllers
                     string qrData = UrlBuilder(@event.EventId.ToString(), @event.EventName, @event.EventLocation, @event.StartDateTime.ToString());
                     storedQr = QrCreate(qrData);
                     qrCreated = true;
-                    return RedirectToAction("Index");
+                    return RedirectToAction("SaveQr");
                 }
             }
             return View(@event);
