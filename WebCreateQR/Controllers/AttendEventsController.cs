@@ -150,7 +150,7 @@ namespace WebCreateQR.Controllers
                 List<int> eventListId = new List<int>();
                 eventListId.Add(a);
 
-                ViewBag.EventId = new SelectList(eventList, eventListId);
+                ViewBag.EventId = new SelectList(eventListId, eventList);
                 return View();
             }
         }
@@ -174,5 +174,3 @@ namespace WebCreateQR.Controllers
         }
     }
 }
-
-
