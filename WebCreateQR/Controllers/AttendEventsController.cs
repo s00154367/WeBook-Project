@@ -143,14 +143,10 @@ namespace WebCreateQR.Controllers
             {
                 ViewBag.eventName = name;
                 ViewBag.time = time;
-                List<string> eventList = new List<string>();
-                eventList.Add(name);
-
                 int a = int.Parse(id);
-                List<int> eventListId = new List<int>();
-                eventListId.Add(a);
-
-                ViewBag.EventId = new SelectList(eventListId, eventList);
+                List<SelectListItem> eventList = new List<SelectListItem>();
+                eventList.Add(new SelectListItem { Text = name, Value = id });
+                ViewBag.EventId = new SelectList(eventList, name, id);
                 return View();
             }
         }
