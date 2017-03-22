@@ -146,7 +146,7 @@ namespace WebCreateQR.Controllers
                 int a = int.Parse(id);
                 List<SelectListItem> eventList = new List<SelectListItem>();
                 eventList.Add(new SelectListItem { Text = name, Value = id });
-                ViewBag.EventId = new SelectList(eventList, id, name);
+                ViewBag.EventId = new SelectList(eventList, "Value", "Text");
                 return View();
             }
         }
