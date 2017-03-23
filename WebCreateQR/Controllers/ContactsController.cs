@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
-using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WebCreateQR.Models;
-using ZXing;
 
 namespace WebCreateQR.Controllers
 {
@@ -54,10 +52,6 @@ namespace WebCreateQR.Controllers
             {
                 db.Contacts.Add(contacts);
                 db.SaveChanges();
-                Bitmap storedQr;
-                string qrData = "contact" + "," + @contacts.DisplayName + "," + @contacts.PhoneNumber + "," + @contacts.EmailAdress;
-                storedQr = QrCreate(qrData);
-                SaveQr();
                 return RedirectToAction("Index");
             }
 
@@ -90,10 +84,6 @@ namespace WebCreateQR.Controllers
             {
                 db.Entry(contacts).State = EntityState.Modified;
                 db.SaveChanges();
-                Bitmap storedQr;
-                string qrData = "contact" + "," + @contacts.DisplayName + "," + @contacts.PhoneNumber + "," + @contacts.EmailAdress;
-                storedQr = QrCreate(qrData);
-                SaveQr();
                 return RedirectToAction("Index");
             }
             return View(contacts);
@@ -132,31 +122,6 @@ namespace WebCreateQR.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-        //creates the qr
-        public Bitmap QrCreate(string qr)
-        {
-            Bitmap storedQr;
-            var writer = new ZXing.BarcodeWriter
-            {
-                Format = BarcodeFormat.QR_CODE,
-                Options = new ZXing.Common.EncodingOptions
-                {
-                    Height = 400,
-                    Width = 400
-                }
-            };
-            storedQr = writer.Write(qr);
-            return storedQr;
-        }
-
-        public FilePathResult SaveQr()
-        {
-          
-            string name = Server.MapPath("/storedQr.bmp");
-
-            return File(name, "image/bmp");
-
         }
     }
 }
